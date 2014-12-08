@@ -1,0 +1,73 @@
+import sys
+import copy
+
+print('Введите N')
+N=int(sys.stdin.readline())
+
+print('Введите числа i и их коррдинаты (xi,yi) в формате: i1 x1,y1;i2 x2,y2')
+st=sys.stdin.readline()
+st=st.rstrip()
+s1=st.split(';')
+
+num=[]
+xy=[]
+x=[]
+y=[]
+
+for i in range(0,len(s1)):
+    num.append(s1[i].split(' ')[0])
+    xy.append(s1[i].split(' ')[1])
+for i in range(0,len(s1)):
+    x.append(xy[i].split(',')[0])
+    y.append(xy[i].split(',')[1])
+
+lst=[]
+
+for i in range(0,N):
+    lst.append([])
+    for j in range(0,N):
+        lst[i].append(None)
+for i in range(1,N+1):
+    for j in range(1,N+1):
+        for k in range(0,N):
+            if int(x[k])==i and int(y[k])==j: lst[i-1][j-1]=int(num[k])
+
+def f1(lst,N,x,y):
+    unq=None
+    unqver=None
+    lsttrans=[]
+    lstver=copy.deepcopy(lst)
+    for i in range(0,N):
+        lsttrans.append([])
+        for j in range(0,N):
+            lsttrans[i].append(lst[j][i])
+    lsttransver=copy.deepcopy(lsttrans)
+    cntr=1
+    pr=1
+    while unqver==None and cntr<=N and pr:
+        k=1
+        while k<=N and pr:
+            if k not in lst[x] and k not in lsttrans[y]:
+                unq=k
+                lstver[x][y]=unq
+                lsttransver[y][x]=unq
+                l=1
+                while l<=N:
+                    yi=0
+                    while yi<=N-1:
+                        if l not in lstver[x] and l not in lsttransver[yi] and lstver[x][yi]==None:
+                            unqver=l
+                        yi=yi+1
+                    l=l+1
+                if unqver!=None: pr=0
+            k=k+1
+        cntr=cntr+1
+    return unq
+
+for i in range(0,N):
+    for j in range(0,N):
+        if lst[i][j]==None: lst[i][j]=f1(lst,N,i,j)
+
+print(lst)
+
+
