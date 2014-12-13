@@ -1,0 +1,62 @@
+import sys
+import copy
+print('Введите N')
+N=int(sys.stdin.readline())
+D={}
+lst1=[]
+lst2=[]
+i=0
+
+#Невозможные комбинации по строкам
+for x in range(1,N+1):
+    for y1 in range(1,N+1):
+        for y2 in range(1,N+1):
+            for k in range(1,N+1):
+                s1='-'+str(x)+str(y1)+str(k)
+                s2='-'+str(x)+str(y2)+str(k)
+                if y1!=y2 and not (s1 in lst1 and s2 in lst2) and not (s1 in lst2 and s2 in lst1):
+                    lst1.append(s1)
+                    lst2.append(s2)
+                    i=i+1
+                    D[i]=s1+' '+s2+' 0'
+
+#Невозможные комбинации по столбцам
+for x1 in range(1,N+1):
+    for x2 in range(1,N+1):
+        for y in range(1,N+1):
+            for k in range(1,N+1):
+                s1='-'+str(x1)+str(y)+str(k)
+                s2='-'+str(x2)+str(y)+str(k)
+                if x1!=x2 and not (s1 in lst1 and s2 in lst2) and not (s1 in lst2 and s2 in lst1):
+                    lst1.append(s1)
+                    lst2.append(s2)
+                    i=i+1
+                    D[i]=s1+' '+s2+' 0'
+
+#Возможные комбинации по строкам
+for x in range(1,N+1):
+    for y1 in range(1,N+1):
+        for y2 in range(1,N+1):
+            for k1 in range(1,N+1):
+                for k2 in range(1,N+1):
+                    s1=str(x)+str(y1)+str(k1)
+                    s2=str(x)+str(y2)+str(k2)
+                    if y1!=y2 and k1!=k2 and not (s1 in lst1 and s2 in lst2) and not (s1 in lst2 and s2 in lst1):
+                        lst1.append(s1)
+                        lst2.append(s2)
+                        i=i+1
+                        D[i]=s1+' '+s2+' 0'
+
+#Возможные комбинации по столбцам
+for x1 in range(1,N+1):
+    for x2 in range(1,N+1):
+        for y in range(1,N+1):
+            for k1 in range(1,N+1):
+                for k2 in range(1,N+1):
+                    s1=str(x1)+str(y)+str(k1)
+                    s2=str(x2)+str(y)+str(k2)
+                    if x1!=x2 and k1!=k2 and not (s1 in lst1 and s2 in lst2) and not (s1 in lst2 and s2 in lst1):
+                        lst1.append(s1)
+                        lst2.append(s2)
+                        i=i+1
+                        D[i]=s1+' '+s2+' 0'
